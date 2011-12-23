@@ -1,0 +1,116 @@
+#!/usr/bin/env bash
+# 
+# This script outputs filepath or user information depending
+# on the option the user specifies on the command line.
+#
+# This script takes one option and one argument. The first a
+# flag allowing the user to specify to check filepath or user
+# information.  The second an object to act upon.
+#
+# To execute the script type ./chk { -f filepath | -u user }
+#
+# This script outputs:
+#   When the -f flag is specified, filepath information is provided
+#   detailing if the filepath exists or is a symbolic link.  If the
+#   filepath exists, filepath permisions are printed.  If filepath
+#   doesn't exist, script provides error message aned terminates.
+#
+#   When the -u flag is specified, if the user exists the user's
+#   home directory is printed and if the user is currently logged.
+#   If the user is not logged on, the last time the user was logged
+#   on is printed.
+#
+# This script uses error() and fatal() functions provided by Greg Boyd.
+#
+
+# Functions
+error () {
+    # error: output an error message and return
+    # the error messages contain the program name
+    # and are written to standard error
+
+    local prog=$(basename $0)
+    echo -e "$prog: ERROR: $*">&2
+}
+
+fatal() {
+    # fatal: output an error message and then exit
+    # the error() function is used.
+    error "$*"
+    local prog=$(basename $0)
+    # Usage message
+    echo "Usage: $prog { -f filepath | -u user }"
+    # now exit with an error
+    exit 1
+}
+
+print_perms() {
+    # print_perms: outputs filepath permissions
+    # Created this function because I was repeating
+    # the same sequence of code after file, directory,
+    # and unknown file type check.
+    echo -n "It is"
+    if [ -r "$object" ]; then
+        echo -n " readable,"
+    else
+        echo -n " not readable,"
+    fi
+    if [ -w "$object" ]; then
+        echo -n " writable,"
+    else
+        echo -n " not writable,"
+    fi
+    if [ -x "$object" ]; then
+        echo " executable."
+    else
+        echo " not executable."
+    fi
+}
+
+# Check for two command line arguments
+[ $# -ne 2 ] && fatal "need two arguments"
+
+# Convenience variables
+flag=$1
+object=$2
+
+# Check that option argument provided is what is expected
+! [ "$flag" = -f -o "$flag" = -u ] && fatal "first argument must be -f or -u"
+
+# filepath option
+if [ "$flag" = -f ]; then
+    if [ -L "$object" ]; then
+        echo "'$object' is a symbolic link"
+        exit 0
+    elif [ ! -e "$object" ]; then
+        echo "'$object' does not exist"
+        exit 1
+    elif [ -f "$object" ]; then
+        echo "'$object' is a regular file"
+        print_perms
+    elif [ -d "$object" ]; then
+        echo "'$object' is a directory"
+        print_perms
+    else
+        echo "'$object' is not a known file type"
+        print_perms
+    fi
+fi
+
+# user option
+if [ "$flag" = -u ]; then
+    if ! grep "^$object:" /etc/passwd > /dev/null; then
+        fatal "user '$object' cannot be found on the system"
+    else
+        userdir=$(grep "^$object:" /etc/passwd | cut -d: -f6)
+        echo "${object}'s home directory is $userdir"
+        if who | grep "^$object " > /dev/null; then
+            echo "'$object' is logged on"
+        else
+            echo "'$object' last logged on at:"
+            last -1 $object
+        fi
+    fi
+fi
+
+exit 0

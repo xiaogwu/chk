@@ -1,0 +1,38 @@
+Script started on Sat Apr 17 16:20:37 2010
+bash$ # Greg Boyd Assignment Two
+bash$ date
+Sat Apr 17 16:20:53 PDT 2010
+bash$ pwd
+/pub/cs/gboyd/cs160b/asmt02
+bash$ id
+uid=3496(gboyd) gid=208(cisdept) groups=217(labstaff),3010(c36471),3023(c36505),3027(c36536),3029(c36538),3081(c38703),3107(c39302),3108(c39303),7061(c76115),7062(c76120),7064(c76131),7092(c77036),7160(c78728)
+bash$ 
+bash$ chk -f chk
+'chk' is a regular file
+It is readable, writable, executable.
+bash$ type chk
+chk is hashed (./chk)
+bash$ chk -f .
+'.' is a directory
+It is readable, writable, executable.
+bash$ chk -f /dev/null
+'/dev/null' is not a known file type
+It is readable, writable, not executable.
+bash$ ls foo something
+foo not found
+something not found
+bash$ ln -s foo something
+bash$ chk -f something
+'something' is a symbolic link
+bash$ chk -u gboyd
+'gboyd's home directory is /users/gboyd
+Currently logged in
+bash$ chk -u greg
+chk:ERROR: user 'greg' cannot be found on the system
+bash$ chk -d gboyd
+chk:ERROR: first argument must be -f or -u
+chk: USAGE: chk { -f filepath | -u user }
+bash$ exit
+exit
+
+script done on Sat Apr 17 16:21:52 2010

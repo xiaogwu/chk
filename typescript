@@ -1,0 +1,48 @@
+Script started on Tue Nov 15 11:43:57 2011
+xwu77@hills:~/cs160b/asmt02$ # Xiao       *** Assignment Two - Xiao G  . Wu
+xwu77@hills:~/cs160b/asmt02$ date
+Tue Nov 15 11:45:32 PST 2011
+xwu77@hills:~/cs160b/asmt02$ pe wd
+/students/xwu77/cs160b/asmt02
+xwu77@hills:~/cs160b/asmt02$ id
+uid=27119(xwu77) gid=581(b20107) groups=7069(c71768),7071(c71770),7192(c73577)
+xwu77@hills:~/cs160b/asmt02$ 
+xwu77@hills:~/cs160b/asmt02$ ./chk -f chk
+'chk' is a regular file
+It is readable, writable, executable.
+xwu77@hills:~/cs160b/asmt02$ ./chk -f .
+'.' is a directory
+It is readable, writable, executable.
+xwu77@hills:~/cs160b/asmt02$ ./chk -f dev   /dev/null
+'/dev/null' is not a known file type
+It is readable, writable, not executable.
+xwu77@hills:~/cs160b/asmt02$ ll
+total 16
+-rwx------   1 xwu77      b20107        3261 Nov 15 11:42 chk*
+drwx------   2 xwu77      b20107          96 Nov 13 22:25 dir/
+-rw-------   1 xwu77      b20107         649 Nov 13 17:28 errfns
+--w-------   1 xwu77      b20107           0 Nov 13 21:45 file
+-rw-------   1 xwu77      b20107        1118 Nov 13 17:28 sample.script
+lrwx------   1 xwu77      b20107           6 Nov 13 19:27 test@ -> errfns
+-rw-------   1 xwu77      b20107         794 Nov 15 11:48 typescript
+xwu77@hills:~/cs160b/asmt02$ ./chk -f test
+'test' is a symbolic link
+xwu77@hills:~/cs160b/asmt02$ ./chk -f xxx
+'xxx' does not exist
+xwu77@hills:~/cs160b/asmt02$ ./chk -u xwu77
+xwu77's home directory is /students/xwu77
+'xwu77' is logged on
+xwu77@hills:~/cs160b/asmt02$ ./chk -u gboyd
+gboyd's home directory is /users/gboyd
+'gboyd' last logged on at:
+gboyd    pts/33       Mon Nov 14 18:33 - 20:05  (01:31)
+xwu77@hills:~/cs160b/asmt02$ ./chk -u greg
+chk: ERROR: user 'greg' cannot be found on the system
+Usage: chk { -f filepath | -u user }
+xwu77@hills:~/cs160b/asmt02$ ./chk -d gboyd
+chk: ERROR: first argument must be -f or -u
+Usage: chk { -f filepath | -u user }
+xwu77@hills:~/cs160b/asmt02$ exit
+exit
+
+script done on Tue Nov 15 11:51:36 2011

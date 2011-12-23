@@ -1,0 +1,22 @@
+This script outputs filepath or user information depending
+on the option the user specifies on the command line.
+
+This script takes one option and one argument. The first a
+flag allowing the user to specify to check filepath or user
+information.  The second an object to act upon.
+
+To execute the script type ./chk { -f filepath | -u user }
+
+This script outputs:
+When the -f flag is specified, filepath information is provided
+detailing if the filepath exists or is a symbolic link.  If the
+filepath exists, filepath permisions are printed.  If filepath
+doesn't exist, script provides error message aned terminates.
+
+When the -u flag is specified, if the user exists the user's
+home directory is printed and if the user is currently logged.
+If the user is not logged on, the last time the user was logged
+on is printed.
+
+This script uses error() and fatal() functions provided by Greg Boyd.
+

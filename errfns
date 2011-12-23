@@ -1,0 +1,30 @@
+#!/bin/bash
+#
+# this file contains two function error() and fatal() as 
+# described below.
+#
+
+error () {
+    # error: output an error message and return
+    # the error messages contain the program name
+    # and are written to standard error
+
+    local prog=$(basename $0)
+    echo -e "$prog:ERROR: $*">&2
+}
+
+fatal() {
+    # fatal: output an error message and then exit
+    # the error() function is used.
+    error "$*"
+    # if you want to output a message about how to successfully
+    # run your program (called a 'usage message'), this would
+    # be the place to do it
+
+    # now exit with an error
+    exit 1
+}
+
+#
+# your program goes here
+#
